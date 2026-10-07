@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Участник</title>
+</head>
+<body>
+<h1 th:if="${isEdit}">Редактирование участника</h1>
+<h1 th:unless="${isEdit}">Регистрация на мероприятие</h1>
+
+<a th:href="@{/}">Назад к списку</a>
+<hr>
+
+<div th:if="${error}" style="color: red; margin-bottom: 15px;">
+    <b>Ошибка:</b> <span th:text="${error}"></span>
+</div>
+
+<form th:action="${isEdit ? '/edit/' + participant.id : '/register'}" th:method="POST" th:object="${participant}">
+
+    <div>
+        <label for="name">Имя:</label><br>
+        <input type="text" id="name" th:field="*{name}" />
+        <span th:if="${#fields.hasErrors('name')}" style="color: red;" th:errors="*{name}"></span>
+    </div>
+    <br>
+
+    <div>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" style="color: red;" th:errors="*{email}"></span>
+    </div>
+    <br>
+
+    <button type="submit" th:text="${isEdit ? 'Сохранить' : 'Зарегистрироваться'}"></button>
+</form>
+</body>
+</html>
+
+
